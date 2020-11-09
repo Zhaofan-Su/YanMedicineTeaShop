@@ -3,19 +3,19 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "选择角色"
-			}
-		},
-		{
-			"path": "pages/hall/index",
-			"style": {
-				
+				"navigationBarTitleText": "index"
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/test/test",
+            "style" : {
+				"navigationBarTitleText": "test"
+			}
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "炎帝药茶铺",
+		"navigationBarTitleText": "page-animation-test",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	}

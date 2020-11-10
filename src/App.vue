@@ -123,6 +123,7 @@ export default {
 <style>
 @import "../colorui/main.css";
 @import "../colorui/icon.css";
+@import "..//colorui/animation.css";
 page {
   height: 100%;
 }

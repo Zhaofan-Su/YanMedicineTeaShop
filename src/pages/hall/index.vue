@@ -147,7 +147,7 @@ export default {
       if (Math.abs(endY - this.rotateTable.startY) > 100) {
         //滑动方向
         direction =
-          endY - this.rotateTable.startY > 0 ? "clockwise" : "anti-clockwise";
+          endY - this.rotateTable.startY < 0 ? "clockwise" : "anti-clockwise";
       } else {
         return;
       }
@@ -177,7 +177,7 @@ export default {
 
 <style>
 .hall {
-  background-image: url("../../static/大厅-bg.jpg");
+  background-image: url("../../static/images/hall-bg.jpg");
   background-size: cover;
   width: 100%;
   height: 100%;

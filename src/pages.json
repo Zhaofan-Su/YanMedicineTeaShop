@@ -7,6 +7,12 @@
 			}
 		},
 		{
+			"path": "pages/intro/index",
+			"style": {
+				
+			}
+		},
+		{
 			"path": "pages/loading/index",
 			"style": {
 				

@@ -2,11 +2,21 @@
 import Vue from "vue";
 
 export default {
-  
+  data(){
+    return{
+
+    }
+  },
+   globalData:{
+     windowHeight:1236,
+     windowWidth:640
+   },
   onLaunch: function () {
 
     uni.getSystemInfo({
       success: function (e) {
+        getApp().globalData.windowHeight = e.windowHeight
+        getApp().globalData.windowWidth = e.windowWidth
         // #ifndef MP
         Vue.prototype.StatusBar = e.statusBarHeight;
         if (e.platform == "android") {

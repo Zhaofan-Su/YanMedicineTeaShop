@@ -2596,7 +2596,7 @@ swiper.round-dot .uni-swiper-dot.uni-swiper-dot-active {
 }
 
 .card-swiper swiper-item {
-	width: 610upx !important;
+	/* width: 610upx !important; */
 	left: 70upx;
 	box-sizing: border-box;
 	padding: 40upx 0upx 70upx;
@@ -2608,7 +2608,7 @@ swiper.round-dot .uni-swiper-dot.uni-swiper-dot-active {
 	display: block;
 	height: 100%;
 	border-radius: 10upx;
-	transform: scale(0.9);
+	/* transform: scale(0.9); */
 	transition: all 0.2s ease-in 0s;
 	overflow: hidden;
 }

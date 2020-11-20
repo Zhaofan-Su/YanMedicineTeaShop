@@ -22,23 +22,38 @@
       </swiper>
     </view>
     <view class="role-name">
-      <image :src="'../../static/images/role-name-'+roleList[roleIndex-1].name+'.png'" :style="'width:'+roleName.width + ';height:'+roleName.height + ';left:'+roleName.left+';top:'+roleName.top"></image>
+      <image :src="'../../static/images/role/role-name-'+roleList[roleIndex-1].name+'.png'" :style="'width:'+roleName.width + ';height:'+roleName.height + ';left:'+roleName.left+';top:'+roleName.top"></image>
     </view>
     <view class="enter-btn">
-      <image :src="roleList[roleIndex-1].name=='yao'?'../../static/images/enter-btn.png':'../../static/images/enter-btn-disable.png'" :style="'width:'+enterBtn.width + ';height:'+enterBtn.height + ';left:'+enterBtn.left+';top:'+enterBtn.top"></image>
+      <!-- <transition name="fade">
+        <image v-if="roleList[roleIndex-1].name=='yao'" src="../../static/images/enter-btn.png" :style="'width:'+enterBtn.width + ';height:'+enterBtn.height + ';left:'+enterBtn.left+';top:'+enterBtn.top"></image>
+        <image v-else src="../../static/images/enter-btn-disable.png" :style="'width:'+enterBtn.width + ';height:'+enterBtn.height + ';left:'+enterBtn.left+';top:'+enterBtn.top"></image>
+
+      </transition> -->
+
+      <image :src="roleList[roleIndex-1].name=='yao'?'../../static/images/role/enter-btn.png':'../../static/images/enter-btn-disable.png'" :style="'width:'+enterBtn.width + ';height:'+enterBtn.height + ';left:'+enterBtn.left+';top:'+enterBtn.top"></image>
     </view>
     <view class="intro-btn" @tap="toIntro">
-      <image :src="roleList[roleIndex-1].name=='yao'?'../../static/images/intro-btn.png':'../../static/images/intro-btn-disable.png'" :style="'width:'+introBtn.width + ';height:'+introBtn.height + ';left:'+introBtn.left+';top:'+introBtn.top"></image>
+      <image :src="roleList[roleIndex-1].name=='yao'?'../../static/images/role/intro-btn.png':'../../static/images/intro-btn-disable.png'" :style="'width:'+introBtn.width + ';height:'+introBtn.height + ';left:'+introBtn.left+';top:'+introBtn.top"></image>
     </view>
     <view class="role-tag">
-      <image :src="'../../static/images/role-tag-'+ roleList[roleIndex-1].name + '.png'" :style="'width:'+roleTag.width + ';height:'+roleTag.height + ';left:'+roleTag.left+';top:'+roleTag.top"></image>
+      <!-- <transition name = "fade"> -->
+        <!-- <image v-if="roleList[roleIndex-1].name" :src="'../../static/images/role-tag-'+ roleList[roleIndex-1].name + '.png'" :style="'width:'+roleTag.width + ';height:'+roleTag.height + ';left:'+roleTag.left+';top:'+roleTag.top"></image> -->
+  
+        <image :src="'../../static/images/role/role-tag-'+ roleList[roleIndex-1].name + '.png'" :style="'width:'+roleTag.width + ';height:'+roleTag.height + ';left:'+roleTag.left+';top:'+roleTag.top"></image>
+      <!-- </transition> -->
     </view>
   </view>
   
 </template>
 
+
+
 <script>
+
+// TODO: 页面元素切换动效需要做
 export default {
+ 
   data() {
     return {
       imageSize:420,
@@ -47,28 +62,28 @@ export default {
       roleList: [
         {
           id: 1,
-          url: "../../static/images/role.png",
+          url: "../../static/images/role/role.png",
           name:'yao'
         },
         {
           id: 2,
-          url: "../../static/images/role.png",
-          name:'yao'
+          url: "../../static/images/role/role.png",
+          name:'shang'
         },
         {
           id: 3,
-          url: "../../static/images/role.png",
-          name:'yao'
+          url: "../../static/images/role/role.png",
+          name:'yi'
         },
         {
           id: 4,
-          url: "../../static/images/role.png",
-          name:'yao'
+          url: "../../static/images/role/role.png",
+          name:'shen'
         },
         {
           id: 5,
-          url: "../../static/images/role.png",
-          name:'yao'
+          url: "../../static/images/role/role.png",
+          name:'jiang'
         },
       ],
       roleIndex: 1,
@@ -147,11 +162,15 @@ export default {
       });
     },
     toIntro(e){
-      uni.navigateTo({
-        url:'/pages/intro/index',
-        success:res=>{},
-        fail:res=>{}
-      })
+      console.log(e)
+      if(this.roleIndex == 1){
+        uni.navigateTo({
+          url:'/pages/intro/index',
+          success:res=>{},
+          fail:res=>{}
+        })
+      }
+      
     },
     handleTouchEnd(e){
       // 上下滑动定位 
@@ -163,7 +182,7 @@ export default {
 
 <style>
 .choose-role {
-  background-image: url("../../static/images/role-bg.png");
+  background-image: url("../../static/images/role/role-bg.png");
 
   background-size: 100% 100%;
   width: 100%;

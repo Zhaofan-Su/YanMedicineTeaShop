@@ -9,7 +9,7 @@
         <view class="animation-shake" style="animationDelay:1s">
             <image class="flag" src="../../static/images/index/flag.png" :style="'width:'+flag.width+';height:'+flag.height+';top:'+flag.top + ';left:'+flag.left"></image>
         </view>
-        <view class="animation-fade" style="animationDelay:0.6s">
+        <view class="animation-fade" style="animationDelay:0.6s" @touchstart.stop='handleTouchStart' @touchend.stop='handleTouchEnd'>
             <image class="next-btn" src="../../static/images/index/next-btn.png" :style="'width:'+nextBtn.width+';height:'+nextBtn.height+';bottom:0px;left:0px'"></image>
         </view>
       
@@ -23,7 +23,7 @@ export default {
         return{
             windowHeight:1236,
             windowWidth:640,
-        
+            startY:0,
             title:{
                     width:'170px',
                     height:'543px',
@@ -76,6 +76,21 @@ export default {
             this.flag.left = scaleSize * 350 + 'px'
             this.flag.top = scaleSize * 258 + 'px'
 
+        },
+        handleTouchStart(e){
+            this.startY = e.touches[0].clientY
+          
+        },
+        handleTouchEnd(e){
+            console.log(e)
+            var endY = e.changedTouches[0].clientY
+            if((this.startY - endY)>0){
+                uni.redirectTo({
+                    url: "/pages/role/index",
+                    success: (res) => {},
+                    fail: (res) => {},
+                })
+            }
         }
     }
     

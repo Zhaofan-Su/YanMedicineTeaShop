@@ -9,7 +9,9 @@ export default {
   },
    globalData:{
      windowHeight:1236,
-     windowWidth:640
+     windowWidth:640,
+     scaleSize:1,
+     scaleX:1
    },
   onLaunch: function () {
 
@@ -17,6 +19,9 @@ export default {
       success: function (e) {
         getApp().globalData.windowHeight = e.windowHeight
         getApp().globalData.windowWidth = e.windowWidth
+      
+        getApp().globalData.scaleSize = e.windowHeight / 1236
+        getApp().globalData.scaleX = e.windowWidth / 640
         // #ifndef MP
         Vue.prototype.StatusBar = e.statusBarHeight;
         if (e.platform == "android") {

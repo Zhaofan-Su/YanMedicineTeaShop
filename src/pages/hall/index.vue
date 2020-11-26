@@ -1,25 +1,19 @@
 <template>
-  <view class="bg-gradual-blue">
+  <view class="container">
     <scroll-view
       scroll-y
       class="DrawerPage hall"
       style="height: 100%"
       :class="showMenu == true ? 'show' : ''"
     >
-      <cu-custom bgColor="bg-gradual-blue" :isBack="true"
-        ><block slot="backText">返回</block>
-        <block slot="content">炎帝药茶铺</block>
-      </cu-custom>
-
-      <view class="choose-btn flex justify-around">
-        <button
-          class="cu-btn bg-mauve lg round"
-          @tap="showMenu = true"
-          data-target="menuList"
-        >
-          搭配清单
-        </button>
-        <button class="cu-btn bg-mauve lg round" @tap="toSelect">选材</button>
+      <view class="char">
+        <image src="../../static/images/hall/char.png" :style="computeCharSize()"></image>
+      </view>
+      <view class="menu-btn" @touchstart.stop="menuBtnStart" @touchend.stop.prevent="menuBtnEnd" @touchmove.stop.prevent="menuBtnMove">
+        <image ref="menuBtn"  src="../../static/images/hall/menu-btn.png" :style="'top:'+menuBtnStyle.top+';left:'+menuBtnStyle.left+';width:'+menuBtnStyle.width+';height:'+menuBtnStyle.height"></image>
+      </view>
+      <view class="choose-btn">
+        <image src="../../static/images/hall/choose-btn.png" :style="computeChooseBtnSize()"></image>
       </view>
     </scroll-view>
 
@@ -55,6 +49,8 @@
 export default {
   data() {
     return {
+      scaleSize:1,
+      scaleX:1,
       showMenu: false,
       listGap: 0,
       menuList: [
@@ -105,13 +101,139 @@ export default {
         startY: null,
         startTime: null,
       },
+      menuBtnStyle:{
+        width:'220px',
+        height:'128px',
+        top:'994px',
+        left:'94px'
+      },
+      r:810,
+      menuBtnControl:{
+        startX:null,
+        startY:null,
+        startTime:null
+      }
     };
   },
+  onLoad(){
+    this.scaleSize = getApp().globalData.scaleSize
+    this.scaleX = getApp().globalData.scaleX
+    this.r *= this.scaleSize
+    this.computeMenuBtnSize()
+  },
   methods: {
+    computeCharSize(){
+      return{
+        top: 256 * this.scaleSize+ 'px',
+        height: 641 * this.scaleSize + 'px',
+        width: 641 * this.scaleX + 'px',
+        left:0
+      }
+    },
+    computeMenuBtnSize(){
+      this.menuBtnStyle.top = 994 * this.scaleSize +'px'
+      this.menuBtnStyle.left = 94 * this.scaleX + 'px'
+      this.menuBtnStyle.height =  128 * this.scaleSize + 'px'
+      this.menuBtnStyle.width = 220 * this.scaleX + 'px'
+      // return{
+      //   top: 994 * this.scaleSize +'px',
+      //   left: 94 * this.scaleX + 'px',
+      //   height: 128 * this.scaleSize + 'px',
+      //   width: 220 * this.scaleX + 'px'
+      // }
+    },
+    computeChooseBtnSize(){
+      return{
+        top: 994 * this.scaleSize +'px',
+        left: 324 * this.scaleX + 'px',
+        height: 129 * this.scaleSize + 'px',
+        width: 219 * this.scaleX + 'px'
+      }
+    },
     toSelect() {
       uni.navigateTo({
         url: "/pages/select/index",
       });
+    },
+   
+    // 菜单按钮滑动 // TODO: 滑动路径需要修改
+    menuBtnStart(e){
+      // this.menuBtnControl.startX = e.touches[0].clientX - e.target.offsetLeft
+      // this.menuBtnControl.startY = e.touches[0].clientY - e.target.offsetTop
+      this.menuBtnControl.startX = e.touches[0].clientX 
+      this.menuBtnControl.startY = e.touches[0].clientY 
+      this.menuBtnControl.startTime = Date.now()
+    },
+    menuBtnEnd(e){
+      
+    },
+    menuBtnMove(e){
+      // 图像跟随移动
+      console.log(this.r)
+      var nowX = e.touches[0].clientX
+      var deltaX = Math.abs(nowX - this.menuBtnControl.startX)
+      var deltaY = this.r - Math.sqrt(this.r * this.r - deltaX * deltaX)
+      // 图像位置移动
+      this.menuBtnStyle.left = 94 * this.scaleX - deltaX + 'px'
+      this.menuBtnStyle.top = 994 * this.scaleSize - deltaY + 'px'
+      // console.log('now', this.menuBtnStyle.left, this.menuBtnStyle.top)
+      // this.$refs.menuBtn.style.left = nowX + 'px'
+      // this.$refs.menuBtn.style.top = this.menuBtnControl.startY - deltaY + 'px'
+    },
+
+    // 转盘的触碰事件
+    handleTouchStart(e) {
+      this.rotateTable.startTime = Date.now();
+      this.rotateTable.startX = e.changedTouches[0].clientX;
+      this.rotateTable.startY = e.changedTouches[0].clientY;
+    },
+    // TODO: 转盘转动有问题
+    handleTouchEnd(e) {
+    
+      const endTime = Date.now();
+      const endX = event.changedTouches[0].clientX;
+      const endY = event.changedTouches[0].clientY;
+
+      //判断按下的时长
+      if (endTime - this.rotateTable.startTime > 2000) {
+        return;
+      }
+      //滑动的方向
+      let direction = 'anti-clockwise';
+      //先判断用户滑动的距离，是否合法，合法:判断滑动的方向 注意 距离要加上绝对值
+      if (Math.abs(endY - this.rotateTable.startY) > 100) {
+        //滑动方向
+        direction =
+          endY - this.rotateTable.startY < 0 ? "clockwise" : "anti-clockwise";
+      } else {
+        return;
+      }
+      //转盘转动
+      this.rotate(direction);
+    },
+    rotate(direction) {
+      console.log(this.listGap)
+      if (direction == "clockwise") {
+        this.listGap += 1;
+      } else {
+        this.listGap -= 1;
+      }
+
+      for (var i = 0; i < this.menuList.length; i++) {
+        let domName = "itme" + i;
+        let index = Math.abs(i + this.listGap) % this.menuList.length;
+        let slist
+        if(direction == 'clockwise'){
+          slist = this.computedCardPosStyle(index, true);
+        }
+        else{
+          slist = this.computedCardPosStyle(index, false);
+        }
+        this.$refs[`item${i}`][0].$el.style.top = slist.top;
+        this.$refs[`item${i}`][0].$el.style.left = slist.left;
+        // this.$refs[`item${i}`][0].$el.style.transform = slist.transform;
+        this.$refs[`item${i}`][0].$el.style.transition = " all 1s ease";
+      }
     },
     computedCardPosStyle(index, clockwise = true) {
       let deg = (index + 1) * (360 / this.menuList.length);
@@ -127,86 +249,48 @@ export default {
         border: `${this.menuList[index].color} 1px solid`,
       };
     },
-    handleTouchStart(e) {
-      this.rotateTable.startTime = Date.now();
-      this.rotateTable.startX = e.changedTouches[0].clientX;
-      this.rotateTable.startY = e.changedTouches[0].clientY;
-    },
-    handleTouchEnd(e) {
-      const endTime = Date.now();
-      const endX = event.changedTouches[0].clientX;
-      const endY = event.changedTouches[0].clientY;
-
-      //判断按下的时长
-      if (endTime - this.rotateTable.startTime > 2000) {
-        return;
-      }
-      //滑动的方向
-      let direction = true;
-      //先判断用户滑动的距离，是否合法，合法:判断滑动的方向 注意 距离要加上绝对值
-      if (Math.abs(endY - this.rotateTable.startY) > 100) {
-        //滑动方向
-        direction =
-          endY - this.rotateTable.startY < 0 ? "clockwise" : "anti-clockwise";
-      } else {
-        return;
-      }
-      //转盘转动
-      this.rotate(direction);
-    },
-    rotate(direction = "clockwise") {
-      if (direction == "clockwise") {
-        this.listGap += 1;
-      } else {
-        this.listGap -= 1;
-      }
-
-      for (var i = 0; i < this.menuList.length; i++) {
-        let domName = "itme" + i;
-        let index = Math.abs(i + this.listGap) % this.menuList.length;
-        let slist = this.computedCardPosStyle(index, direction);
-        this.$refs[`item${i}`][0].$el.style.top = slist.top;
-        this.$refs[`item${i}`][0].$el.style.left = slist.left;
-        // this.$refs[`item${i}`][0].$el.style.transform = slist.transform;
-        this.$refs[`item${i}`][0].$el.style.transition = " all 1s ease";
-      }
-    },
   },
 };
 </script>
 
 <style>
-.hall {
-  background-image: url("../../static/images/hall-bg.jpg");
-  background-size: cover;
+.container{
+  background-image: url("../../static/images/index/bg.png");
+  background-size: 100% 100%;
   width: 100%;
   height: 100%;
 }
-.choose-btn {
-  position: absolute;
-  bottom: 10px;
-  left: 0;
-  right: 0;
+
+.hall {
+  background-image: url("../../static/images/hall/bg.png");
+  background-size: 100% 100%;
+  width: 100%;
+  height: 100%;
 }
+
 page {
   background-image: linear-gradient(45deg, #0081ff, #1cbbb4);
   width: 100vw;
   overflow: hidden;
 }
 
+.char,
+.choose-btn,
+.menu-btn{
+  position: fixed;
+}
+
+/* 右侧转盘 */
 .DrawerPage {
   position: fixed;
   width: 100vw;
   height: 100vh;
   left: 0vw;
-  /* right: 0vw; */
-  background-color: #f1f1f1;
+ 
   transition: all 0.4s;
 }
 
 .DrawerPage.show {
-  /* transform: scale(0.9, 0.9); */
-  /* left: 85vw; */
   transform: scale(0.9, 0.9);
   left: -75vw;
   box-shadow: 0 0 60upx rgba(0, 0, 0, 0.2);
@@ -217,11 +301,8 @@ page {
   position: absolute;
   width: 85vw;
   height: 100vh;
-  /* left: 0; */
-  /* right: 0; */
   left: 100vw;
   top: 0;
-  /* transform: scale(0.9, 0.9) translateX(-100%); */
   transform: scale(0.9, 0.9) translateX(100%);
   opacity: 0;
   pointer-events: none;
@@ -275,9 +356,11 @@ page {
   left: -300px;
   width: 700px;
   height: 700px;
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid #ffffff;
+ 
   border-radius: 50% 50%;
+  border: 4px solid  rgba(170, 133, 97, 0.7);
+  /* background-color: #f1f1f1; */
+  background-color:  rgba(170, 133, 97, 0) ;
 }
 
 #effect-windmill > .blade-container {
@@ -288,7 +371,6 @@ page {
   height: 700px;
   overflow: hidden;
   z-index: 20;
-  /* right: 10px; */
 }
 
 #effect-windmill > .blade-container > .blade-item {

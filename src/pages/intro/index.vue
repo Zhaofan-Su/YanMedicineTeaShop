@@ -1,17 +1,20 @@
 <template>
     <view class="container">
-        <view class="back">
-            <image src="../../static/images/intro/back.png" :style="'width:'+back.width+';height:'+back.height+';left:'+back.left+';top:'+back.top"></image>
-        </view>
-        <view class="share">
-            <image src="../../static/images/intro/share.png" :style="'width:'+share.width+';height:'+share.height+';left:'+share.left+';top:'+share.top"></image>
-        </view>
-        <view class="char">
-            <image src="../../static/images/intro/char.png" :style="'width:'+char.width+';height:'+char.height+';bottom:0px;left:0px'"></image>
-        </view>
-         <view class="charBg">
+        
+        <view class="charBg animation-fade"  style="animationDelay:0.4s">
             <image src="../../static/images/intro/char-bg.png" :style="'width:'+charBg.width+';height:'+charBg.height+';top:'+charBg.top"></image>
         </view>
+        <view class="char animation-scale-up" style="animationDuration:0.8s">
+            <image src="../../static/images/intro/char.png" :style="'width:'+char.width+';height:'+char.height+';bottom:0px;left:0px'"></image>
+        </view>
+        <view class="back" @tap="goBack">
+            <image src="../../static/images/intro/back.png" :style="'width:'+back.width+';height:'+back.height+';left:'+back.left+';top:'+back.top"></image>
+        </view>
+        <view class="share" @tap="generateShare">
+            <image src="../../static/images/intro/share.png" :style="'width:'+share.width+';height:'+share.height+';left:'+share.left+';top:'+share.top"></image>
+        </view>
+       
+       
         
     </view>
 </template>
@@ -38,9 +41,9 @@ export default {
                height:'1236px'
             },
             charBg:{
-                width:'724px',
-                height:'1084px',
-                top:'0px'
+                width:'651px',
+                height:'1008px',
+                top:'94px'
             }
         }
     },
@@ -65,10 +68,21 @@ export default {
             this.char.width = 640 * scaleX+'px'
             this.char.height = 1236 * scaleSize + 'px'
 
-            this.charBg.width = 724 * scaleX + 'px'
-            console.log(this.charBg.width)
-            this.charBg.height = 1084 * scaleSize + 'px'      
-            // this.charBg.top = 94 * scaleSize + 'px'      
+            this.charBg.width = 651 * scaleX + 'px'
+            this.charBg.height = 1008 * scaleSize + 'px'      
+            this.charBg.top = 94 * scaleSize + 'px'      
+        },
+        goBack(){
+        
+            uni.redirectTo ({
+                url:'/pages/role/index',
+                success:res=>{},
+                fail:res=>{}
+            })
+        },
+        // TODO: finish the logic of share
+        generateShare(){
+
         }
     }
 }
@@ -89,6 +103,7 @@ export default {
 }
 
 .charBg{
+    
     margin-left: auto;
     margin-right: auto;
     left: 0;

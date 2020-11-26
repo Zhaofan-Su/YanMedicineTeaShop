@@ -9,7 +9,7 @@
       <view class="char">
         <image src="../../static/images/hall/char.png" :style="computeCharSize()"></image>
       </view>
-      <view class="menu-btn" @touchstart.stop="menuBtnStart" @touchend.stop.prevent="menuBtnEnd" @touchmove.stop.prevent="menuBtnMove">
+      <view class="menu-btn" @tap="showMenu=true" >
         <image ref="menuBtn"  src="../../static/images/hall/menu-btn.png" :style="'top:'+menuBtnStyle.top+';left:'+menuBtnStyle.left+';width:'+menuBtnStyle.width+';height:'+menuBtnStyle.height"></image>
       </view>
       <view class="choose-btn">
@@ -135,12 +135,7 @@ export default {
       this.menuBtnStyle.left = 94 * this.scaleX + 'px'
       this.menuBtnStyle.height =  128 * this.scaleSize + 'px'
       this.menuBtnStyle.width = 220 * this.scaleX + 'px'
-      // return{
-      //   top: 994 * this.scaleSize +'px',
-      //   left: 94 * this.scaleX + 'px',
-      //   height: 128 * this.scaleSize + 'px',
-      //   width: 220 * this.scaleX + 'px'
-      // }
+   
     },
     computeChooseBtnSize(){
       return{
@@ -158,8 +153,6 @@ export default {
    
     // 菜单按钮滑动 // TODO: 滑动路径需要修改
     menuBtnStart(e){
-      // this.menuBtnControl.startX = e.touches[0].clientX - e.target.offsetLeft
-      // this.menuBtnControl.startY = e.touches[0].clientY - e.target.offsetTop
       this.menuBtnControl.startX = e.touches[0].clientX 
       this.menuBtnControl.startY = e.touches[0].clientY 
       this.menuBtnControl.startTime = Date.now()
@@ -176,9 +169,6 @@ export default {
       // 图像位置移动
       this.menuBtnStyle.left = 94 * this.scaleX - deltaX + 'px'
       this.menuBtnStyle.top = 994 * this.scaleSize - deltaY + 'px'
-      // console.log('now', this.menuBtnStyle.left, this.menuBtnStyle.top)
-      // this.$refs.menuBtn.style.left = nowX + 'px'
-      // this.$refs.menuBtn.style.top = this.menuBtnControl.startY - deltaY + 'px'
     },
 
     // 转盘的触碰事件
@@ -212,16 +202,16 @@ export default {
       this.rotate(direction);
     },
     rotate(direction) {
-      console.log(this.listGap)
       if (direction == "clockwise") {
-        this.listGap += 1;
-      } else {
         this.listGap -= 1;
+      } else {
+        this.listGap += 1;
       }
 
       for (var i = 0; i < this.menuList.length; i++) {
         let domName = "itme" + i;
         let index = Math.abs(i + this.listGap) % this.menuList.length;
+        console.log(index)
         let slist
         if(direction == 'clockwise'){
           slist = this.computedCardPosStyle(index, true);
@@ -237,13 +227,13 @@ export default {
     },
     computedCardPosStyle(index, clockwise = true) {
       let deg = (index + 1) * (360 / this.menuList.length);
-      if (!clockwise) {
-        deg = -deg;
-      }
-      deg += 18;
+      // if (!clockwise) {
+      //   deg = -deg;
+      // }
+      // deg += 18;
       return {
-        top: 300 - Math.cos((deg * Math.PI) / 180) * 400 + "px",
-        left: 500 + Math.sin((deg * Math.PI) / 180) * 400 + "px",
+        left: 500 + Math.cos((deg * Math.PI) / 180) * 400 + "px",
+        top: 300 - Math.sin((deg * Math.PI) / 180) * 400 + "px",
         // transform: `translate(-50%, -50%) rotate(${deg}deg)`,
         // transform: `rotate(${deg}deg)`,
         border: `${this.menuList[index].color} 1px solid`,

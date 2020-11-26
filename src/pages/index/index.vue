@@ -9,7 +9,7 @@
         <view class="animation-shake" style="animationDelay:1s">
             <image class="flag" src="../../static/images/index/flag.png" :style="'width:'+flag.width+';height:'+flag.height+';top:'+flag.top + ';left:'+flag.left"></image>
         </view>
-        <view class="animation-fade" style="animationDelay:0.6s" @touchstart.stop='handleTouchStart' @touchend.stop='handleTouchEnd'>
+        <view class="animation-fade" style="animationDelay:0.6s" @touchstart.stop.prevent='handleTouchStart' @touchend.stop.prevent='handleTouchEnd'>
             <image class="next-btn" src="../../static/images/index/next-btn.png" :style="'width:'+nextBtn.width+';height:'+nextBtn.height+';bottom:0px;left:0px'"></image>
         </view>
       

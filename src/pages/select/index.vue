@@ -19,6 +19,7 @@
 export default {
   data() {
     return {
+      rote:true,
       listGap: 0,
       menuList: [
         {
@@ -129,39 +130,6 @@ export default {
   position: absolute;
 }
 
-#effect-windmill > .blade-container > .blade-item:nth-child(1) {
-  /* border-right: 150px solid transparent;
-  border-bottom: 150px solid #e74c3c; */
-  /* border: #e74c3c 1px solid; */
-}
-
-#effect-windmill > .blade-container > .blade-item:nth-child(2) {
-  /* border-left: 150px solid transparent;
-  border-bottom: 150px solid #e67e22; */
-  /* transform: translate(-50%, -50%) rotate(-72deg); */
-  /* border: #e67e22 1px solid; */
-}
-
-#effect-windmill > .blade-container > .blade-item:nth-child(3) {
-  /* border-right: 150px solid transparent;
-  border-top: 150px solid #f1c40f; */
-  /* transform: translate(-50%, -50%) rotate(-144deg); */
-  /* border: #f1c40f 1px solid; */
-}
-
-#effect-windmill > .blade-container > .blade-item:nth-child(4) {
-  /* border-left: 150px solid transparent;
-  border-top: 150px solid #2ecc71; */
-  /* transform: translate(-50%, -50%) rotate(-216deg); */
-  /* border: #2ecc71 1px solid; */
-}
-
-#effect-windmill > .blade-container > .blade-item:nth-child(5) {
-  /* border-left: 150px solid transparent;
-  border-top: 150px solid #a328eb; */
-  /* transform: translate(-50%, -50%) rotate(-360deg); */
-  /* border: #a328eb 1px solid; */
-}
 
 @keyframes wind {
   from {

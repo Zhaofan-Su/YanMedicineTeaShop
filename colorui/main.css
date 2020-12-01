@@ -2591,9 +2591,7 @@ swiper.round-dot .uni-swiper-dot.uni-swiper-dot-active {
 	pointer-events: none;
 }
 
-.card-swiper {
-	/* height: 420upx !important; */
-}
+
 
 .card-swiper swiper-item {
 	/* width: 610upx !important; */

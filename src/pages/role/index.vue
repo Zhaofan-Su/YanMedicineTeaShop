@@ -22,19 +22,27 @@
       </swiper>
     </view>
     <view class="role-name">
+      
       <image :src="'../../static/images/role/role-name-'+roleList[roleIndex-1].name+'.png'" :style="'width:'+roleName.width + ';height:'+roleName.height + ';left:'+roleName.left+';top:'+roleName.top"></image>
     </view>
-    <view class="enter-btn" @tap="toHall">
+    <view class="enter-btn"  @tap="toHall" >
       <!-- <transition name="fade">
-        <image v-if="roleList[roleIndex-1].name=='yao'" src="../../static/images/enter-btn.png" :style="'width:'+enterBtn.width + ';height:'+enterBtn.height + ';left:'+enterBtn.left+';top:'+enterBtn.top"></image>
-        <image v-else src="../../static/images/enter-btn-disable.png" :style="'width:'+enterBtn.width + ';height:'+enterBtn.height + ';left:'+enterBtn.left+';top:'+enterBtn.top"></image>
+        <image v-if="roleList[roleIndex-1].name=='yao'" src="../../static/images/role/enter-btn.png" :style="'width:'+enterBtn.width + ';height:'+enterBtn.height + ';left:'+enterBtn.left+';top:'+enterBtn.top"></image>
+        <image v-else src="../../static/images/role/enter-btn-disable.png" :style="'width:'+enterBtn.width + ';height:'+enterBtn.height + ';left:'+enterBtn.left+';top:'+enterBtn.top"></image>
 
       </transition> -->
+      <image  :src="roleList[roleIndex-1].name=='yao'?'../../static/images/role/enter-btn.png':'../../static/images/role/enter-btn-disable.png'" :style="'width:'+enterBtn.width + ';height:'+enterBtn.height + ';left:'+enterBtn.left+';top:'+enterBtn.top"></image>
 
-      <image :src="roleList[roleIndex-1].name=='yao'?'../../static/images/role/enter-btn.png':'../../static/images/role/enter-btn-disable.png'" :style="'width:'+enterBtn.width + ';height:'+enterBtn.height + ';left:'+enterBtn.left+';top:'+enterBtn.top"></image>
+      <!-- <image v-if="roleList[roleIndex-1].name=='yao'" src="../../static/images/role/enter-btn.png" :style="'width:'+enterBtn.width + ';height:'+enterBtn.height + ';left:'+enterBtn.left+';top:'+enterBtn.top"></image>
+      <image v-else src="../../static/images/role/enter-btn-disable.png" :style="'width:'+enterBtn.width + ';height:'+enterBtn.height + ';left:'+enterBtn.left+';top:'+enterBtn.top"></image> -->
+
     </view>
+
     <view class="intro-btn" @tap="toIntro">
-      <image :src="roleList[roleIndex-1].name=='yao'?'../../static/images/role/intro-btn.png':'../../static/images/role/intro-btn-disable.png'" :style="'width:'+introBtn.width + ';height:'+introBtn.height + ';left:'+introBtn.left+';top:'+introBtn.top"></image>
+      <image v-if="roleList[roleIndex-1].name=='yao'" src="../../static/images/role/intro-btn.png" :style="'width:'+introBtn.width + ';height:'+introBtn.height + ';left:'+introBtn.left+';top:'+introBtn.top"></image>
+      <image v-else src="../../static/images/role/intro-btn-disable.png" :style="'width:'+introBtn.width + ';height:'+introBtn.height + ';left:'+introBtn.left+';top:'+introBtn.top"></image>
+
+      <!-- <image :src="roleList[roleIndex-1].name=='yao'?'../../static/images/role/intro-btn.png':'../../static/images/role/intro-btn-disable.png'" :style="'width:'+introBtn.width + ';height:'+introBtn.height + ';left:'+introBtn.left+';top:'+introBtn.top"></image> -->
     </view>
     <view class="role-tag">
       <!-- <transition name = "fade"> -->
@@ -193,6 +201,7 @@ export default {
 <style>
 .choose-role {
   background-image: url("../../static/images/role/role-bg.png");
+  background-blend-mode: multiply;
 
   background-size: 100% 100%;
   width: 100%;
@@ -226,5 +235,25 @@ export default {
 .role-name,
 .role-tag{
   position: fixed;
+}
+
+.enter-btn,
+.intro-btn{
+  animation-name: imageFade;
+  animation-timing-function: ease-in-out;
+  /* animation-iteration-count: infinite; */
+  animation-duration: 1s;
+  /* animation-direction: alternate; */
+  /* transition: all .3s; */
+}
+
+@keyframes enterToDisable {
+  0% {
+    background-image: url("../../static/images/role/enter-btn.png");
+  }
+
+  100% {
+    background-image: url("../../static/images/role/enter-btn-disable.png");
+  }
 }
 </style>

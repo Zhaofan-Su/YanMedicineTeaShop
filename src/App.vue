@@ -1,7 +1,9 @@
 <script>
 import Vue from "vue";
+import pageAnimation from './components/page-animation'
 
 export default {
+  mixins: [pageAnimation],
   data(){
     return{
 

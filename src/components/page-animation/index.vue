@@ -8,7 +8,8 @@
 				this.hide(next)
 			})
 			this.$router.afterEach(() => {
-				setTimeout(this.show, 50)
+				// setTimeout(this.show, 50)
+				this.show()
 			})
 		},
 		methods: {
@@ -19,17 +20,22 @@
 				setTimeout(() => {
 					classList.remove('animation-before', 'animation-leave')
 					callback && callback()
-				}, 300)
+				}, 3000)
 			},
 			show() {
 				const classList = document.querySelector('uni-page').classList
 				classList.add('animation-before')
-				setTimeout(() => {
+				// setTimeout(() => {
+				// 	classList.add('animation-enter', 'animation-after', 'animation-show')
+				// 	setTimeout(() => {
+				// 		classList.remove('animation-before', 'animation-after', 'animation-enter')
+				// 	}, 300)
+				// }, 20)
 					classList.add('animation-enter', 'animation-after', 'animation-show')
 					setTimeout(() => {
 						classList.remove('animation-before', 'animation-after', 'animation-enter')
-					}, 300)
-				}, 20)
+					}, 3000)
+		
 			}
 		},
 		// #endif

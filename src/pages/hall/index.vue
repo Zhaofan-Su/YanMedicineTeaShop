@@ -259,7 +259,6 @@ export default {
 }
 
 page {
-  background-image: linear-gradient(45deg, #0081ff, #1cbbb4);
   width: 100vw;
   overflow: hidden;
 }

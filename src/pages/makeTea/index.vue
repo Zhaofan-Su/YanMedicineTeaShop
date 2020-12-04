@@ -12,6 +12,10 @@
         <view class="cart" ref="cart">
             <image src="../../static/images/makeTea/购物车.png" style="width:48px;height:48px"></image>
         </view>
+
+        <view class="cu-btn" @tap="toTest">
+            点击
+        </view>
     </view>
 </template>
 
@@ -49,6 +53,11 @@ export default {
         }).exec();
     },
     methods:{
+        toTest(e){
+            // this.$router.push('/pages/hall/index')
+            console.log(this.$router)
+           
+        },
         toCart(e){
             var controPos = {}
             // 点击点位置

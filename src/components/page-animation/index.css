@@ -30,19 +30,22 @@ uni-page.animation-show {
 uni-page.animation-before {}
 
 uni-page.animation-leave {
-	-webkit-animation: moveFromBottom 3s ease both;
-	-moz-animation: moveFromBottom 3s ease both;
-	animation: moveFromBottom 3s ease both;
+	-webkit-animation: moveToTop 1s ease both;
+	-moz-animation: moveToTop 1s ease both;
+	animation: moveToTop 1s ease both;
 }
 
 uni-page.animation-enter {
-	-webkit-animation: moveToTop 3s ease both;
-	-moz-animation: moveToTop 3s ease both;
-	animation: moveToTop 3s ease both;
+	-webkit-animation: moveFromBottom 1s ease both;
+	-moz-animation: moveFromBottom 1s ease both;
+	animation: moveFromBottom 1s ease both;
 }
 
 uni-page.animation-show {
 	/* opacity: 1; */
+	-webkit-animation: moveToTop 3s ease both;
+	-moz-animation: moveToTop 3s ease both;
+	animation: moveToTop 3s ease both;
 }
 
 uni-page.animation-after {

@@ -121,6 +121,7 @@ export default {
       }
     };
   },
+ 
   onLoad() {
     this.windowHeight = getApp().globalData.windowHeight
     this.windowWidth = getApp().globalData.windowWidth
@@ -128,7 +129,7 @@ export default {
     this.imageSize = this.windowHeight * 0.34;
    
     this.calculateDomSize()
-   
+    
   },
   methods: {
     calculateDomSize(){
@@ -255,5 +256,35 @@ export default {
   100% {
     background-image: url("../../static/images/role/enter-btn-disable.png");
   }
+}
+
+
+uni-page.animation-enter {
+	-webkit-animation: moveFromBottom 1s ease both;
+	-moz-animation: moveFromBottom 1s ease both;
+	animation: moveFromBottom 1s ease both;
+}
+
+uni-page.animation-after {
+	/* 在页面上使用 transform 会导致页面内的 fixed 定位渲染为 absolute，需要在动画完成后移除 */
+	transform: translateY(0);
+}
+
+@-webkit-keyframes moveFromBottom {
+	from {
+		-webkit-transform: translateY(100%);
+	}
+}
+
+@-moz-keyframes moveFromBottom {
+	from {
+		-moz-transform: translateY(100%);
+	}
+}
+
+@keyframes moveFromBottom {
+	from {
+		transform: translateY(100%);
+	}
 }
 </style>

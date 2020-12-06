@@ -1,6 +1,11 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+			"path":"pages/indexTest/index",
+			"style":{}
+		},
+		// 上面为测试页面
+		{
 			"path":"pages/makeTea/index",
 			"style":{}
 		},

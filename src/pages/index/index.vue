@@ -149,7 +149,11 @@ export default {
     
         this.calculateDomSize()
         this.calculateRoleDomSize()
+        
     
+    },
+    onReady(){
+        this.tapTo()
     },
     onUnload(){
         

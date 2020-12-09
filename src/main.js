@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App'
-
+// import downloader from 'img-downloader';
 
 
 

@@ -1,18 +1,18 @@
 <template>
-  <view class="container">
+  <view class="container ">
     <scroll-view
       scroll-y
-      class="DrawerPage hall"
+      class="DrawerPage hall pt-page-rotateInNewspaper"
       style="height: 100%"
       :class="showMenu == true ? 'show' : ''"
     >
-      <view class="char">
+      <view class="char animation-slide-bottom" style="animationDelay:1s;animationDuration:1s">
         <image src="../../static/images/hall/char.png" :style="computeCharSize()"></image>
       </view>
-      <view class="menu-btn" @tap="showMenu=true" >
+      <view class="menu-btn animation-slide-left" style="animationDelay:1s;animationDuration:1s" @tap="showMenu=true" >
         <image ref="menuBtn"  src="../../static/images/hall/menu-btn.png" :style="'top:'+menuBtnStyle.top+';left:'+menuBtnStyle.left+';width:'+menuBtnStyle.width+';height:'+menuBtnStyle.height"></image>
       </view>
-      <view class="choose-btn">
+      <view class="choose-btn animation-slide-right" style="animationDelay:1s;animationDuration:1s">
         <image src="../../static/images/hall/choose-btn.png" :style="computeChooseBtnSize()"></image>
       </view>
     </scroll-view>
@@ -276,7 +276,7 @@ page {
   height: 100vh;
   left: 0vw;
  
-  transition: all 0.4s;
+  transition: all 1s;
 }
 
 .DrawerPage.show {
@@ -295,7 +295,7 @@ page {
   transform: scale(0.9, 0.9) translateX(100%);
   opacity: 0;
   pointer-events: none;
-  transition: all 0.4s;
+  transition: all 0.8s;
   padding: 100upx 0;
 }
 
@@ -325,7 +325,7 @@ page {
   font-size: 50upx;
   opacity: 0;
   pointer-events: none;
-  transition: all 0.4s;
+  transition: all 0.8s;
 }
 
 .DrawerClose.show {
@@ -348,7 +348,6 @@ page {
  
   border-radius: 50% 50%;
   border: 4px solid  rgba(170, 133, 97, 0.7);
-  /* background-color: #f1f1f1; */
   background-color:  rgba(170, 133, 97, 0) ;
 }
 

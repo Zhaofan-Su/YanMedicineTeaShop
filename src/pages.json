@@ -1,7 +1,13 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path":"pages/indexTest/index",
+			"path": "pages/indexA/index",
+			"style": {
+				
+			}
+		},
+		{
+			"path":"pages/roleA/index",
 			"style":{}
 		},
 		// 上面为测试页面
@@ -10,23 +16,11 @@
 			"style":{}
 		},
 		{
-			"path": "pages/index/index",
-			"style": {
-				
-			}
-		},
-		{
 			"path": "pages/hall/index",
 			"style": {}
 		},
 		{
 			"path": "pages/intro/index",
-			"style": {
-				
-			}
-		},
-		{
-			"path": "pages/role/index",
 			"style": {
 				
 			}

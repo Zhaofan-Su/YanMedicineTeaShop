@@ -1,17 +1,17 @@
 <template>
-    <view>
-        <view class="bg pt-page-scaleUpCenter" :style="'background-image:url(' + '../../static/images/intro/poster-'+ roleName + '.png)'">
+    <view id="all">
+        <view id="bg-container" class="bg pt-page-scaleUpCenter" :style="'background-image:url(' + '../../static/images/intro/poster-'+ roleName + '.png)'">
             
         </view>
 
-        <view class="star" :style="'background-image:url(' + '../../static/images/intro/'+ roleName + '-star.png)'"></view>
-            <view class="title " :style="'background-image:url(' + '../../static/images/intro/'+ roleName + '-title.png)'"></view>
-            <view class="fire " :style="'background-image:url(' + '../../static/images/intro/'+ roleName + '-fire.png)'"></view>
-            <view class="save" @tap="saveImage">
-                <image :src="'../../static/images/intro/poster-'+roleName+'-save.png'" :style="getSaveCSS()"></image>
-            </view>
-            <view class="next" @tap="goHall">
-                <image :src="'../../static/images/intro/poster-'+roleName+'-next.png'" :style="getNextCSS()"></image>
+        <view id="top" class="star" :style="'background-image:url(' + '../../static/images/intro/'+ roleName + '-star.png)'"></view>
+        <view class="title " :style="'background-image:url(' + '../../static/images/intro/'+ roleName + '-title.png)'"></view>
+        <view class="fire " :style="'background-image:url(' + '../../static/images/intro/'+ roleName + '-fire.png)'"></view>
+        <view class="save" @tap="saveImage">
+            <image :src="'../../static/images/intro/poster-'+roleName+'-save.png'" :style="getSaveCSS()"></image>
+        </view>
+        <view class="next" @tap="goHall">
+            <image :src="'../../static/images/intro/poster-'+roleName+'-next.png'" :style="getNextCSS()"></image>
         </view>
     </view>
     
@@ -38,7 +38,9 @@ export default {
                 left:'319px',
                 width:"55px",
                 height:'112px'
-            }
+            },
+            checkAudio:null,
+            checkAudioPlaying:false
         }
     },
     onLoad(obj){
@@ -47,8 +49,79 @@ export default {
         this.windowWidth = getApp().globalData.windowWidth
         this.scaleX = getApp().globalData.scaleX
         this.scaleY = getApp().globalData.scaleY
+        getApp().globalData.innerAudioContext = null
+        this.addBgm()
+    },
+    onUnload(){
+        if(getApp().globalData.innerAudioContext !== null)
+        {
+            getApp().globalData.innerAudioContext.destroy()
+        }
+        if(this.checkAudio!==null){
+            this.checkAudio.destroy()
+        }
     },
     methods:{
+        addBgm(){
+           
+            if(getApp().globalData.innerAudioContext !== null){
+                return false
+            }
+            getApp().globalData.innerAudioContext = uni.createInnerAudioContext();
+
+            // 自动播放
+            getApp().globalData.innerAudioContext.autoplay = true;
+            // 循环播放
+            getApp().globalData.innerAudioContext.loop = true
+            getApp().globalData.innerAudioContext.volume = 0.3
+            getApp().globalData.innerAudioContext.src = `../../static/music/${this.roleName}-bgm.mp3`;
+          
+            getApp().globalData.innerAudioContext.play()
+            
+            var that = this
+            // 音乐开始播放
+            getApp().globalData.innerAudioContext.onPlay(() => {
+                getApp().globalData.bgmPlaying = !getApp().globalData.innerAudioContext.paused;//查看是否可以自动播放
+            });
+            getApp().globalData.innerAudioContext.onEnded(()=>{
+                getApp().globalData.bgmPlaying = false
+            })
+            getApp().globalData.innerAudioContext.onError((res) => {
+                console.log(res.errMsg);
+                console.log(res.errCode);
+            });
+        },
+        addCheckAudio(){
+            if(this.checkAudioPlaying || this.checkAudio !== null){
+                return false
+            }
+            this.checkAudio = uni.createInnerAudioContext();
+
+            // 自动播放
+            this.checkAudio.autoplay = true;
+            // 音效声音
+            this.checkAudio.volume = 0.2
+            
+            // 循环播放
+            // this.innerAudioContext.loop = true
+            this.checkAudio.src = '../../static/music/check.mp3';
+            
+            this.checkAudio.play()
+            
+            
+            var that = this
+            // 音乐开始播放
+            this.checkAudio.onPlay(() => {
+                that.checkAudioPlaying = !that.checkAudio.paused;//查看是否可以自动播放
+            });
+            this.checkAudio.onEnded(()=>{
+                that.checkAudioPlaying = false
+            })
+            this.checkAudio.onError((res) => {
+                console.log(res.errMsg);
+                console.log(res.errCode);
+            });
+        },
        getSaveCSS(){
            if(this.roleName == 'shang'){
                 return{
@@ -92,7 +165,15 @@ export default {
             });
        },
        goHall(){
-           console.log('hall')
+           this.addCheckAudio()
+            const classlist = document.querySelector('#all').classList
+            classlist.add('fade')
+            setTimeout(function(){
+                classlist.remove('fade')
+                uni.redirectTo({
+                    url:'/pages/hall/index'
+                })
+            }, 4000)
        }
     }
 }
@@ -136,6 +217,11 @@ export default {
     animation-fill-mode: forwards;
 }
 
+/* 退场动画 */
+.fade{
+    animation: fade 4s ease-out 0s;
+
+}
 @keyframes starAnimation {
     0%{
         filter: brightness(50%);
@@ -268,5 +354,17 @@ export default {
     to{
         opacity: 1;
     }
+}
+
+@keyframes fade {
+    to{
+        opacity: 0;
+    }    
+}
+
+@-webkit-keyframes fade {
+    to{
+        opacity: 0;
+    }    
 }
 </style>

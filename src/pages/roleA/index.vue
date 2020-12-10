@@ -57,7 +57,7 @@ export default {
         },
         {
           id: 3,
-          url: "../../static/images/role/yao.png",
+          url: "../../static/images/role/yi.png",
           name:'yi'
         },
         {
@@ -67,12 +67,13 @@ export default {
         },
         {
           id: 5,
-          url: "../../static/images/role/shang.png",
+          url: "../../static/images/role/jiang.png",
           name:'jiang'
         },
       ],
       roleIndex: 1,
-
+      rotateAudio:null,
+      rotatePlaying:false
     };
   },
  
@@ -81,11 +82,52 @@ export default {
     this.windowWidth = getApp().globalData.windowWidth
     this.imageSize = this.windowHeight * 0.34;
   },
+  onUnload(){
+    if(getApp().globalData.innerAudioContext !== null){
+      getApp().globalData.innerAudioContext.destroy()
+    }
+    if(this.rotateAudio!==null){
+      this.rotateAudio.destroy()
+    }
+  },
   methods: {
+    addRotateAudio(){
+      if(this.rotatePlaying || this.rotateAudio!== null){
+                return false
+            }
+            this.rotateAudio = uni.createInnerAudioContext();
+
+            // 自动播放
+            this.rotateAudio.autoplay = true;
+            // 音效声音
+            this.rotateAudio.volume = 0.2
+            
+            // 循环播放
+            // this.innerAudioContext.loop = true
+            this.rotateAudio.src = '../../static/music/rotate.wav';
+            
+            this.rotateAudio.play()
+            
+            
+            var that = this
+            // 音乐开始播放
+            this.rotateAudio.onPlay(() => {
+                that.rotatePlaying = !that.rotateAudio.paused;//查看是否可以自动播放
+            });
+            that.rotateAudio.onEnded(()=>{
+                that.rotatePlaying = false
+            })
+            that.rotateAudio.onError((res) => {
+                console.log(res.errMsg);
+                console.log(res.errCode);
+            });
+
+    },
     roleChange(e) {
       this.roleIndex = e.detail.current + 1;
     },
     toIntro(){
+      this.addRotateAudio()
       const classList = document.querySelector('.uni-swiper-wrapper').classList
       var that = this
       for(var i = 0; i < this.roleList.length; i++){

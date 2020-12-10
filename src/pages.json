@@ -1,24 +1,33 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+			"path": "pages/first/index",
+			"style": {
+				
+			}
+		},
+		{
 			"path": "pages/indexA/index",
 			"style": {
 				
 			}
 		},
 		{
+			"path":"pages/makeTea/index",
+			"style":{}
+		},
+		
+		{
 			"path":"pages/roleA/index",
 			"style":{}
 		},
 		// 上面为测试页面
-		{
-			"path":"pages/makeTea/index",
-			"style":{}
-		},
+		
 		{
 			"path": "pages/hall/index",
 			"style": {}
 		},
+		
 		{
 			"path": "pages/intro/index",
 			"style": {
@@ -26,19 +35,7 @@
 			}
 		},
 		{
-			"path": "pages/intro/index",
-			"style": {
-				
-			}
-		},
-		{
-			"path": "pages/loading/index",
-			"style": {
-				
-			}
-		},
-		{
-			"path": "pages/select/index",
+			"path": "pages/final/index",
 			"style": {}
 		}
 		

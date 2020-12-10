@@ -13,10 +13,13 @@ export default {
      windowHeight:1236,
      windowWidth:640,
      scaleSize:1,
-     scaleX:1
+     scaleX:1,
+     innerAudioContext:null,
+     bgmPlaying:false,        
    },
   onLaunch: function () {
-
+    getApp().globalData.innerAudioContext = null
+    getApp().globalData.bgmPlaying = false
     uni.getSystemInfo({
       success: function (e) {
         getApp().globalData.windowHeight = e.windowHeight
@@ -152,6 +155,7 @@ export default {
 page {
   height: 100%;
   background-image: url('./static/images/role/bg.png');
+  z-index: -99;
 }
 
 .slide-fade{

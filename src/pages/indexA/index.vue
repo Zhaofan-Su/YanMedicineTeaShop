@@ -1,5 +1,5 @@
 <template>
-    <view >
+    <view id="index-page" @tap="addBgm">
         <view id="other" class="container ">
             <view class="title"></view>
             <view class="yandi"></view>
@@ -11,7 +11,6 @@
             <view id="topStar" class="star"></view>
         </view>
         <view id="fireFire" class="fire" @tap="toRolePage"></view>
-        
     </view>
 </template>
 
@@ -19,18 +18,98 @@
 export default {
     data(){
         return{
-            enterEnable:false
+            enterEnable:false,
+            fireAudio:null,
+            fireAudioPlaying:false
         }
     },
     onLoad(){
         var that = this
         setTimeout(function(){
             that.enterEnable = true
-        },10000)
+        },10000)      
+    },
+    onReady(){
+        
+    },
+    onUnload(){
+        // 小火苗音乐销毁
+        if(this.fireAudio!=null){
+            this.fireAudio.destroy()
+        }
+        
     },
     methods:{
+        addBgm(){
+           
+            if(getApp().globalData.bgmPlaying || getApp().globalData.innerAudioContext !== null){
+                return false
+            }
+            getApp().globalData.innerAudioContext = uni.createInnerAudioContext();
+
+            // 自动播放
+            getApp().globalData.innerAudioContext.autoplay = true;
+            // 循环播放
+            getApp().globalData.innerAudioContext.loop = true
+            getApp().globalData.innerAudioContext.src = '../../static/music/P1-bgm-new.mp3';
+          
+            getApp().globalData.innerAudioContext.play()
+            
+            var that = this
+            // 音乐开始播放
+            getApp().globalData.innerAudioContext.onPlay(() => {
+                getApp().globalData.bgmPlaying = !getApp().globalData.innerAudioContext.paused;//查看是否可以自动播放
+            });
+            getApp().globalData.innerAudioContext.onEnded(()=>{
+                getApp().globalData.bgmPlaying = false
+            })
+            getApp().globalData.innerAudioContext.onError((res) => {
+                console.log(res.errMsg);
+                console.log(res.errCode);
+            });
+        },
+        addFireAudio(){
+            if(this.fireAudioPlaying || this.fireAudio !== null){
+                return false
+            }
+            this.fireAudio = uni.createInnerAudioContext();
+
+            // 自动播放
+            this.fireAudio.autoplay = true;
+            // 音效声音
+            this.fireAudio.volume = 0.2
+            
+            // 循环播放
+            // this.innerAudioContext.loop = true
+            this.fireAudio.src = '../../static/music/index-fire-rise.wav';
+            
+            this.fireAudio.play()
+            
+            
+            var that = this
+            // 音乐开始播放
+            this.fireAudio.onPlay(() => {
+                that.fireAudioPlaying = !that.fireAudio.paused;//查看是否可以自动播放
+            });
+            that.fireAudio.onEnded(()=>{
+                that.fireAudioPlaying = false
+            })
+            that.fireAudio.onError((res) => {
+                console.log(res.errMsg);
+                console.log(res.errCode);
+            });
+
+
+        },
         toRolePage(){
             if(this.enterEnable){
+                var that = this
+                setTimeout(function(){
+                    that.addFireAudio()
+                }, 2000)
+                
+
+
                 const FireClassList = document.querySelector('#fireFire').classList
                 const other = document.querySelector('#other').classList
               
@@ -79,7 +158,7 @@ export default {
 
 /* title动画 */
 .title {
-    background-image: url('../../static/images/index/title--100.png');
+    background-image: url('../../static/images/index/title.png');
     filter: brightness(5%);
     animation: titleAnimation 6s ease-out 8s ;
     animation-fill-mode: forwards;

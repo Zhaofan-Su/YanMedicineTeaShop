@@ -42,7 +42,7 @@ export default {
     methods:{
         addBgm(){
            
-            if(getApp().globalData.bgmPlaying || getApp().globalData.innerAudioContext !== null){
+            if(getApp().globalData.innerAudioContext !== null){
                 return false
             }
             getApp().globalData.innerAudioContext = uni.createInnerAudioContext();

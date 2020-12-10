@@ -7,11 +7,17 @@
         <view id="top" class="star" :style="'background-image:url(' + '../../static/images/intro/'+ roleName + '-star.png)'"></view>
         <view class="title " :style="'background-image:url(' + '../../static/images/intro/'+ roleName + '-title.png)'"></view>
         <view class="fire " :style="'background-image:url(' + '../../static/images/intro/'+ roleName + '-fire.png)'"></view>
-        <view class="save" @tap="saveImage">
-            <image :src="'../../static/images/intro/poster-'+roleName+'-save.png'" :style="getSaveCSS()"></image>
+        <view class="save" >
+            <a :href="'../../static/images/download/'+roleName+'.jpg'" :download="roleName">
+                <image :src="'../../static/images/intro/poster-'+roleName+'-save.png'" :style="getSaveCSS()"></image>
+
+            </a>
         </view>
         <view class="next" @tap="goHall">
             <image :src="'../../static/images/intro/poster-'+roleName+'-next.png'" :style="getNextCSS()"></image>
+        </view>
+        <view class="back pt-page-scaleUpCenter" @tap="goBack">
+            <image src="../../static/images/final/back.png" :style="backStyle"></image>
         </view>
     </view>
     
@@ -40,7 +46,8 @@ export default {
                 height:'112px'
             },
             checkAudio:null,
-            checkAudioPlaying:false
+            checkAudioPlaying:false,
+            backStyle:'',
         }
     },
     onLoad(obj){
@@ -50,6 +57,8 @@ export default {
         this.scaleX = getApp().globalData.scaleX
         this.scaleY = getApp().globalData.scaleY
         getApp().globalData.innerAudioContext = null
+        this.backStyle = `top:${43*this.scaleY}px;left:${42*this.scaleX}px;width:${92*this.scaleX}px;height:${33*this.scaleY}px`
+
         this.addBgm()
     },
     onUnload(){
@@ -174,6 +183,11 @@ export default {
                     url:'/pages/hall/index'
                 })
             }, 4000)
+       },
+       goBack(){
+           uni.redirectTo({
+               url:'/pages/roleA/index'
+           })
        }
     }
 }
@@ -190,6 +204,7 @@ export default {
     position: absolute;
 }
 
+.back,
 .save,
 .next{
     position: fixed;
@@ -222,6 +237,7 @@ export default {
     animation: fade 4s ease-out 0s;
 
 }
+
 @keyframes starAnimation {
     0%{
         filter: brightness(50%);
